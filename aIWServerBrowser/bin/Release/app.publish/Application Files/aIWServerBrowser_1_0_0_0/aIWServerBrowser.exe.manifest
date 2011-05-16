@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
+  <asmv1:assemblyIdentity name="aIWServerBrowser.exe" version="1.0.0.0" publicKeyToken="d7052e917dac019c" language="neutral" processorArchitecture="x86" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="aIWServerBrowser" version="1.0.0.42435" language="neutral" processorArchitecture="x86" />
+    <commandLine file="aIWServerBrowser.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="aIWServerBrowser.exe" size="162816">
+      <assemblyIdentity name="aIWServerBrowser" version="1.0.0.42435" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>Y23CxSLS/D5U2s8zBsdu1WIqK1k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="aIWServerBrowser.exe.config" size="834">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>VHF1iXZWJSTJfiZQbDVa5N3YHnQ=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=Ryunosuke-PC\Ryunosuke" issuerKeyHash="8cf19ecdc210d1e18e7e213175aa6896e904d917" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>d2v0joHMUZPbBu8Qb9CBGop9zlI=</DigestValue></Reference></SignedInfo><SignatureValue>ZDfXL2i3/D0fAmd16E9bmLkiMC97gM9xf5DdFS97AtXwFoX9Nt6DLv7wnkREtK6OmX8jDI7gOpGDvwgg3lXvGW1EgEV9Uk2P5PuTUKOo+Vmb+eSBppKEM4kDzvKGEyue/Htxk04JsndmuafSO0P6zumJI10Op2JQoLv1rIwJ/tQ=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>x+q4SKC//v2ap+90G141Nw0r3Cqu3n4pAe5NUS7gFWq/e7lUAaUV05VqziAEaIPKfdcu0VhKW/KJ2KSZm28zep7fAnoB18mTtiNh8EpdzdqJucP43yEPfUaVOiJqreD82dwIIum4mL0Ob358OaZEnJV1urVtu/CnSfj6zU2c+p0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="52ce7d8a1a81d06f10ef06db9351cc818ef46b77" Description="" Url=""><as:assemblyIdentity name="aIWServerBrowser.exe" version="1.0.0.0" publicKeyToken="d7052e917dac019c" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=Ryunosuke-PC\Ryunosuke</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>er6/X5so623o/yOZa7ThY06iHGM=</DigestValue></Reference></SignedInfo><SignatureValue>LhR1dOt1apti6grB2+k2eDoOsxI88QSnz13LuYfKm2wlCnaI8vRnuMHMp8nz07qbz6LV+4Lc5o3raowm7toBPahAuZDTUhWbrldqw3Mt46/lAs5pbhIG6RteMsjajKmFxxw8VUtY7raJGOIheYLIjHuGX7XA1cbBDfFHiTnV3Bc=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>x+q4SKC//v2ap+90G141Nw0r3Cqu3n4pAe5NUS7gFWq/e7lUAaUV05VqziAEaIPKfdcu0VhKW/KJ2KSZm28zep7fAnoB18mTtiNh8EpdzdqJucP43yEPfUaVOiJqreD82dwIIum4mL0Ob358OaZEnJV1urVtu/CnSfj6zU2c+p0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB8TCCAVqgAwIBAgIQUOLzreHuy5ZPtJL+MTWpPjANBgkqhkiG9w0BAQUFADA3MTUwMwYDVQQDHiwAUgB5AHUAbgBvAHMAdQBrAGUALQBQAEMAXABSAHkAdQBuAG8AcwB1AGsAZTAeFw0xMTA1MTUyMzM0MzBaFw0xMjA1MTUwNTM0MzBaMDcxNTAzBgNVBAMeLABSAHkAdQBuAG8AcwB1AGsAZQAtAFAAQwBcAFIAeQB1AG4AbwBzAHUAawBlMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDH6rhIoL/+/Zqn73QbXjU3DSvcKq7efikB7k1RLuAVar97uVQBpRXTlWrOIARog8p91y7RWEpb8onYpJmbbzN6nt8CegHXyZO2I2HwSl3N2om5w/jfIQ99RpU6Imqt4PzZ3Agi6biYvQ5vfnw5pkSclXW6tW278KdJ+PrNTZz6nQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAKmvaEoxekaLJck/d8Bmt9e8suGBM3gw7ey3bJzlODdOvMnPlYwkYJQrby9a/3RneentT1Mzusv0TqlWUgTSxmQitHu9vhGq+fMl3MWTdLFUuXbd1X7Lp64bls7Nby3Yrn0a5w1WSSQnqiJkuhJXSJ5mwZEA/L+96jvPFsVZ3P1V</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

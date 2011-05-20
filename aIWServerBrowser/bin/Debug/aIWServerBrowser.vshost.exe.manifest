@@ -3,7 +3,7 @@
   <asmv1:assemblyIdentity name="aIWServerBrowser.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="aIWServerBrowser" version="1.0.1.34159" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="aIWServerBrowser" version="1.0.2.34403" language="neutral" processorArchitecture="x86" />
     <commandLine file="aIWServerBrowser.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -57,14 +57,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="aIWServerBrowser.exe" size="161792">
-      <assemblyIdentity name="aIWServerBrowser" version="1.0.1.34159" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="aIWServerBrowser.exe" size="165888">
+      <assemblyIdentity name="aIWServerBrowser" version="1.0.2.34403" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>n8GjAeo4vt9RC4GSt/vadSsZR7c=</dsig:DigestValue>
+        <dsig:DigestValue>SeTBhAHM7e05/Q8qE5PXmZEK3/k=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -27,6 +27,7 @@ using System.Threading;
 
 namespace aIWServerBrowser
 {
+    public delegate void joinServerFinished();
     public delegate void doUpdateServer(Server e);
     public partial class InfoDlg : Form
     {
@@ -140,32 +141,15 @@ namespace aIWServerBrowser
 
         private void singleServerJoinButton_Click(object sender, EventArgs e)
         {
-            new GameLauncher(currentServer.ServerAddress.ToString(), ShowErrorDlg);
             singleServerJoinButton.Enabled = false;
             this.Hide();
 
-            new GameStartingUI().Show();
-            new Thread(new ThreadStart(StartGWServer)).Start();
+            new GameStartingUI(currentServer, new joinServerFinished(joinServerDone)).Show();
         }
 
-        delegate void startGWCallback();
-        private void StartGWServer()
+        public void joinServerDone()
         {
-            if (singleServerJoinButton.InvokeRequired)
-            {
-                Server s = currentServer;
-                new GameLauncher(s.ServerAddress.ToString(), ShowErrorDlg);
-
-                Thread.Sleep(15000);
-                this.Invoke(new startGWCallback(StartGWServer));
-            }
-            else
-                singleServerJoinButton.Enabled = true;
-        }
-
-        private void ShowErrorDlg(string msg)
-        {
-            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            singleServerJoinButton.Enabled = true;
         }
     }
 }

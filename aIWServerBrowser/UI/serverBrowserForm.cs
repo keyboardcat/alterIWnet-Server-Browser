@@ -38,6 +38,7 @@ namespace aIWServerBrowser
         private ServerQueryHandler qhandler;
         private FiltersDlg filtersDlg;
         private FavouritesMngr favMngr;
+
         public serverBrowserForm()
         {
             InitializeComponent();
@@ -209,12 +210,10 @@ namespace aIWServerBrowser
             return serversSelected;
         }
 
-        private void launchGameOnAddress(string address)
+        private void launchGameOnAddress(Server s)
         {
-            new GameStartingUI().Show();
-
-            Thread thread = new Thread(new ParameterizedThreadStart(startGameThread));
-            thread.Start(address);
+            joinGameButton.Enabled = false;
+            new GameStartingUI(s, new joinServerFinished(serverFinishedLaunch)).startConnecting();
         }
 
         private void ShowErrorDlg(string msg)
@@ -377,6 +376,12 @@ namespace aIWServerBrowser
 
         #region UI - Events
 
+        private void serverFinishedLaunch()
+        {
+            joinGameButton.Enabled = true;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             new AddServerUI(new addServerCallback(refreshSingleServer)).ShowDialog();
@@ -437,7 +442,7 @@ namespace aIWServerBrowser
                 if (infoDlg != null)
                     infoDlg.Hide();
                 this.WindowState = FormWindowState.Minimized;
-                launchGameOnAddress(serversSelected[0].ServerAddress.ToString());
+                launchGameOnAddress(serversSelected[0]);
             }
         }
 
@@ -556,23 +561,5 @@ namespace aIWServerBrowser
         }
 
         #endregion
-
-        #region Threaded Functions
-        public delegate void startGameThread_Invoke(Object arg);
-        private void startGameThread(Object arg)
-        {
-            string addr = (string)arg;
-            if (joinGameButton.InvokeRequired)
-            {
-                new GameLauncher(addr, ShowErrorDlg);
-                
-                Thread.Sleep(15000);
-                this.Invoke(new startGameThread_Invoke(startGameThread), new object[] { arg });
-            }
-            else
-                joinGameButton.Enabled = true;
-        }
-        #endregion
-
     }
 }

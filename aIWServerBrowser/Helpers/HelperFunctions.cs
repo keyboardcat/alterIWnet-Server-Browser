@@ -377,24 +377,22 @@ namespace aIWServerBrowser
             this.server = server;
             this.gle = gle;
             this.gamepath = HelperFunctions.getGamePath();
-            _thread = new Thread(new ThreadStart(Run));
-            _thread.Start();
         }
 
-        protected virtual void Run()
+        public void Launch()
         {
-            if (Process.GetProcessesByName("iw4mp.dat").Length == 0)
+            try
             {
-                try
-                {
-                    Process.Start(this.gamepath);
-                }
-                catch (Exception e)
-                {
-                    gle(e.Message);
-                }
-                Thread.Sleep(15000);
+                Process.Start(this.gamepath);
             }
+            catch (Exception e)
+            {
+                gle(e.Message);
+            }
+        }
+
+        public void Connect()
+        {
             try
             {
                 Process.Start("aiw://connect/" + server);

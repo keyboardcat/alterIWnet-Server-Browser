@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\ServerQuery.cs" />
     <Compile Include="Helpers\Filter.cs" />
     <Compile Include="Helpers\Sorters.cs" />
     <Compile Include="UI\AddServerUI.cs">
@@ -103,7 +104,7 @@
     </Compile>
     <Compile Include="Helpers\HelperFunctions.cs" />
     <Compile Include="UI\QueryHandler.cs" />
-    <Compile Include="Backend\Query.cs" />
+    <Compile Include="Backend\MasterQuery.cs" />
     <Compile Include="UI\serverBrowserForm.cs">
       <SubType>Form</SubType>
     </Compile>

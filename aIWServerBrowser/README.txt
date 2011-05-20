@@ -1,4 +1,4 @@
-VERSION v1.0.0.0
+VERSION v1.0.1.0
 
 INSTALLING:
 
@@ -17,3 +17,5 @@ KNOWN BUGS:
 FEATURES OF THE FUTURE:
 - Add colours into the server names
 - More awesome filtering! (You'll see)
+- Steam-like server list info dialog, you can wait for a slot to become available or you can be notified when there is a slot.
+- Suggestions, anyone?

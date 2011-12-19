@@ -67,13 +67,15 @@ namespace aIWServerBrowser
             this.serverHC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favouriteToggle = new System.Windows.Forms.Button();
             this.queryIPAddr = new System.Windows.Forms.Button();
+            this.mngFriendsBtn = new System.Windows.Forms.Button();
+            this.updateLink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // stopButton
             // 
             this.stopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.stopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopButton.Location = new System.Drawing.Point(1136, 12);
+            this.stopButton.Location = new System.Drawing.Point(1134, 12);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(51, 24);
             this.stopButton.TabIndex = 0;
@@ -84,7 +86,7 @@ namespace aIWServerBrowser
             // taskProgress
             // 
             this.taskProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.taskProgress.Location = new System.Drawing.Point(991, 13);
+            this.taskProgress.Location = new System.Drawing.Point(989, 13);
             this.taskProgress.Name = "taskProgress";
             this.taskProgress.Size = new System.Drawing.Size(139, 23);
             this.taskProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -92,12 +94,12 @@ namespace aIWServerBrowser
             // 
             // taskDescription
             // 
-            this.taskDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.taskDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.taskDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.taskDescription.Location = new System.Drawing.Point(252, 15);
             this.taskDescription.Name = "taskDescription";
-            this.taskDescription.Size = new System.Drawing.Size(735, 20);
+            this.taskDescription.Size = new System.Drawing.Size(733, 20);
             this.taskDescription.TabIndex = 2;
             this.taskDescription.Text = "0 servers found.";
             this.taskDescription.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -106,7 +108,7 @@ namespace aIWServerBrowser
             // 
             this.joinGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.joinGameButton.Enabled = false;
-            this.joinGameButton.Location = new System.Drawing.Point(1093, 537);
+            this.joinGameButton.Location = new System.Drawing.Point(1091, 537);
             this.joinGameButton.Name = "joinGameButton";
             this.joinGameButton.Size = new System.Drawing.Size(94, 27);
             this.joinGameButton.TabIndex = 3;
@@ -117,7 +119,7 @@ namespace aIWServerBrowser
             // serverInfoButton
             // 
             this.serverInfoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.serverInfoButton.Location = new System.Drawing.Point(993, 537);
+            this.serverInfoButton.Location = new System.Drawing.Point(991, 537);
             this.serverInfoButton.Name = "serverInfoButton";
             this.serverInfoButton.Size = new System.Drawing.Size(94, 27);
             this.serverInfoButton.TabIndex = 4;
@@ -128,7 +130,7 @@ namespace aIWServerBrowser
             // filterButton
             // 
             this.filterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.filterButton.Location = new System.Drawing.Point(793, 537);
+            this.filterButton.Location = new System.Drawing.Point(791, 537);
             this.filterButton.Name = "filterButton";
             this.filterButton.Size = new System.Drawing.Size(94, 27);
             this.filterButton.TabIndex = 6;
@@ -169,7 +171,7 @@ namespace aIWServerBrowser
             // refreshListButton
             // 
             this.refreshListButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.refreshListButton.Location = new System.Drawing.Point(893, 537);
+            this.refreshListButton.Location = new System.Drawing.Point(891, 537);
             this.refreshListButton.Name = "refreshListButton";
             this.refreshListButton.Size = new System.Drawing.Size(94, 27);
             this.refreshListButton.TabIndex = 12;
@@ -179,9 +181,9 @@ namespace aIWServerBrowser
             // 
             // serverBrowserView
             // 
-            this.serverBrowserView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.serverBrowserView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.serverBrowserView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.serverIP,
             this.serverName,
@@ -198,7 +200,7 @@ namespace aIWServerBrowser
             this.serverBrowserView.Location = new System.Drawing.Point(15, 42);
             this.serverBrowserView.MultiSelect = false;
             this.serverBrowserView.Name = "serverBrowserView";
-            this.serverBrowserView.Size = new System.Drawing.Size(1172, 489);
+            this.serverBrowserView.Size = new System.Drawing.Size(1170, 489);
             this.serverBrowserView.TabIndex = 10;
             this.serverBrowserView.UseCompatibleStateImageBehavior = false;
             this.serverBrowserView.View = System.Windows.Forms.View.Details;
@@ -271,18 +273,18 @@ namespace aIWServerBrowser
             // 
             this.favouriteToggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.favouriteToggle.Enabled = false;
-            this.favouriteToggle.Location = new System.Drawing.Point(445, 537);
+            this.favouriteToggle.Location = new System.Drawing.Point(513, 537);
             this.favouriteToggle.Name = "favouriteToggle";
-            this.favouriteToggle.Size = new System.Drawing.Size(206, 27);
+            this.favouriteToggle.Size = new System.Drawing.Size(136, 27);
             this.favouriteToggle.TabIndex = 13;
-            this.favouriteToggle.Text = "Add/Remove Server from Favourites";
+            this.favouriteToggle.Text = "Add/Remove Favourite";
             this.favouriteToggle.UseVisualStyleBackColor = true;
             this.favouriteToggle.Click += new System.EventHandler(this.favouriteToggle_Click);
             // 
             // queryIPAddr
             // 
             this.queryIPAddr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryIPAddr.Location = new System.Drawing.Point(657, 537);
+            this.queryIPAddr.Location = new System.Drawing.Point(655, 537);
             this.queryIPAddr.Name = "queryIPAddr";
             this.queryIPAddr.Size = new System.Drawing.Size(130, 27);
             this.queryIPAddr.TabIndex = 14;
@@ -290,11 +292,36 @@ namespace aIWServerBrowser
             this.queryIPAddr.UseVisualStyleBackColor = true;
             this.queryIPAddr.Click += new System.EventHandler(this.button1_Click);
             // 
+            // mngFriendsBtn
+            // 
+            this.mngFriendsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.mngFriendsBtn.Location = new System.Drawing.Point(371, 537);
+            this.mngFriendsBtn.Name = "mngFriendsBtn";
+            this.mngFriendsBtn.Size = new System.Drawing.Size(136, 27);
+            this.mngFriendsBtn.TabIndex = 15;
+            this.mngFriendsBtn.Text = "Manage Friend List...";
+            this.mngFriendsBtn.UseVisualStyleBackColor = true;
+            this.mngFriendsBtn.Click += new System.EventHandler(this.mngFriendsBtn_Click);
+            // 
+            // updateLink
+            // 
+            this.updateLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.updateLink.AutoSize = true;
+            this.updateLink.Location = new System.Drawing.Point(12, 553);
+            this.updateLink.Name = "updateLink";
+            this.updateLink.Size = new System.Drawing.Size(102, 13);
+            this.updateLink.TabIndex = 16;
+            this.updateLink.TabStop = true;
+            this.updateLink.Text = "Check for Updates?";
+            this.updateLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateLink_LinkClicked);
+            // 
             // serverBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1199, 575);
+            this.ClientSize = new System.Drawing.Size(1197, 575);
+            this.Controls.Add(this.updateLink);
+            this.Controls.Add(this.mngFriendsBtn);
             this.Controls.Add(this.queryIPAddr);
             this.Controls.Add(this.favouriteToggle);
             this.Controls.Add(this.refreshListButton);
@@ -309,7 +336,7 @@ namespace aIWServerBrowser
             this.Controls.Add(this.taskProgress);
             this.Controls.Add(this.stopButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(890, 613);
+            this.MinimumSize = new System.Drawing.Size(1051, 613);
             this.Name = "serverBrowserForm";
             this.Text = "alterIWnet Server Browser";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.serverBrowserForm_FormClosing);
@@ -345,5 +372,7 @@ namespace aIWServerBrowser
         private System.Windows.Forms.ColumnHeader serverHC;
         private System.Windows.Forms.Button favouriteToggle;
         private System.Windows.Forms.Button queryIPAddr;
+        private System.Windows.Forms.Button mngFriendsBtn;
+        private System.Windows.Forms.LinkLabel updateLink;
     }
 }

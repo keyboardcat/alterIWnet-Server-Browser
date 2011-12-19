@@ -30,6 +30,7 @@ using System.IO;
 
 namespace aIWServerBrowser
 {
+    public delegate void JoiningCallback(bool b);
     public partial class serverBrowserForm : Form
     {
         private List<Server> serverList;
@@ -38,15 +39,18 @@ namespace aIWServerBrowser
         private ServerQueryHandler qhandler;
         private FiltersDlg filtersDlg;
         private FavouritesMngr favMngr;
+        private FriendsMngr friendMngr;
+        public bool connectingToServer = false;
 
         public serverBrowserForm()
         {
             InitializeComponent();
             currentFilter = Filter.getDefaultFilter();
             serverList = new List<Server>();
-            infoDlg = new InfoDlg(new doUpdateServer(refreshSingleServer));
+            infoDlg = new InfoDlg(new doUpdateServer(refreshSingleServer), new JoiningCallback(onJoiningGame));
             filtersDlg = new FiltersDlg(new onFilterChanged(filterChanged));
             favMngr = new FavouritesMngr();
+            friendMngr = new FriendsMngr();
         }
 
         #region Query functions
@@ -68,6 +72,8 @@ namespace aIWServerBrowser
             if (taskInProgress)
                 return;
 
+            friendMngr.updateServers();
+
             taskInProgress = true;
             refreshListButton.Enabled = false;
             filterButton.Enabled = false;
@@ -75,7 +81,7 @@ namespace aIWServerBrowser
             stopButton.Enabled = true;
             qhandler = new ServerQueryHandler(servers, 
                 new QueryProgress(onProgressUpdate),
-                new BlankCallback(onServerQueryBatchCompleted));
+                new Action(onServerQueryBatchCompleted));
         }
 
         private void refreshSingleServer(Server e)
@@ -94,7 +100,7 @@ namespace aIWServerBrowser
 
         private void checkForUpdate()
         {
-            Version ver = new Version(Application.ProductVersion);
+            /*Version ver = new Version(Application.ProductVersion);
             try
             {
                 WebClient wc = new WebClient();
@@ -108,8 +114,9 @@ namespace aIWServerBrowser
             catch
             {
                 return;
-            }
+            }*/
         }
+
         delegate void askUserTUCallback(string link, Version latestver);
         private void askUserToUpdate(string link, Version latestver)
         {
@@ -141,17 +148,18 @@ namespace aIWServerBrowser
         delegate void addToServerListCallback(Server s);
         private void addToServerList(Server server)
         {
-
             if (serverList.Contains(server))
                 if (server.rowItem != null)
                     if (serverBrowserView.Items.Contains(server.rowItem))
                         return;
+
             if (serverBrowserView.InvokeRequired)
             {
                 addToServerListCallback s = new addToServerListCallback(addToServerList);
                 this.Invoke(s, new object[] { server });
                 return;
             }
+
             serverList.Add(server);
             server.ServerUpdated += new ServerUpdated(onServerUpdated);
 
@@ -161,18 +169,18 @@ namespace aIWServerBrowser
                 server.queryStatus != Server.ServerQueryStatus.TimedOut)
             {
                 lvi.SubItems.Add(HelperFunctions.removeColourCodes(server.serverName));
-                lvi.SubItems.Add(favMngr.isFavourite(server) ? "⃝" : "-");
+                lvi.SubItems.Add(favMngr.isFavourite(server) ? "X" : "-");
                 lvi.SubItems.Add(string.Format("{0} ({1})", server.serverPing.ToString(), server.serverDvars["sv_maxPing"]));
                 lvi.SubItems.Add(string.Format("{0} / {1}", server.serverNPlayers, server.serverMaxPlayers));
                 lvi.SubItems.Add(HelperFunctions.gameTypeToFullname(server.serverGametype));
                 lvi.SubItems.Add(HelperFunctions.mapToFullname(server.serverMap));
                 lvi.SubItems.Add(server.serverMod);
-                lvi.SubItems.Add(server.serverDvars["g_hardcore"].Equals("1") ? "⃝" : "-");
+                lvi.SubItems.Add(server.serverDvars["g_hardcore"].Equals("1") ? "X" : "-");
             }
             else // not queried yet, so we just add it as a blank server :<
             {
                 lvi.SubItems.Add("--");
-                lvi.SubItems.Add(favMngr.isFavourite(server) ? "⃝" : "-");
+                lvi.SubItems.Add(favMngr.isFavourite(server) ? "X" : "-");
                 lvi.SubItems.Add("--");
                 lvi.SubItems.Add("--");
                 lvi.SubItems.Add("--");
@@ -212,8 +220,7 @@ namespace aIWServerBrowser
 
         private void launchGameOnAddress(Server s)
         {
-            joinGameButton.Enabled = false;
-            new GameStartingUI(s, new joinServerFinished(serverFinishedLaunch)).startConnecting();
+            new GameStartingUI(s, new Action(serverFinishedLaunch)).startConnecting();
         }
 
         private void ShowErrorDlg(string msg)
@@ -232,11 +239,25 @@ namespace aIWServerBrowser
 
         #region UI - Backend Callbacks
 
+        private void onJoiningGame(bool doingit)
+        {
+            connectingToServer = doingit;
+            joinGameButton.Enabled = !doingit;
+
+            if (doingit)
+            {
+                if (infoDlg != null)
+                    infoDlg.Hide();
+                WindowState = FormWindowState.Minimized;
+            }
+        }
+
+
         private void onServerQueryBatchCompleted()
         {
             if (stopButton.InvokeRequired)
             {
-                this.Invoke(new BlankCallback(onServerQueryBatchCompleted));
+                this.Invoke(new Action(onServerQueryBatchCompleted));
                 return;
             }
             taskInProgress = false;
@@ -250,7 +271,6 @@ namespace aIWServerBrowser
             else
                 setProgressDesc(serverBrowserView.Items.Count + " servers found...");
         }
-
 
 
         delegate void populateCallback(MasterQueryResult mqr);
@@ -275,7 +295,7 @@ namespace aIWServerBrowser
                 setProgressDesc("Querying " + serverList.Count + " servers...");
 
                 // Create the serverqueryhandler directly as we're already in a task - doQuery is there to create the task, not to continue it.
-                qhandler = new ServerQueryHandler(serverList, new QueryProgress(onProgressUpdate), new BlankCallback(onServerQueryBatchCompleted));
+                qhandler = new ServerQueryHandler(serverList, new QueryProgress(onProgressUpdate), new Action(onServerQueryBatchCompleted));
             }
         }
 
@@ -293,7 +313,7 @@ namespace aIWServerBrowser
 
             // fairly horrible but works
             taskProgress.Value = (int)(((float)done / (float)total) * 100.0);
-            taskDescription.Text = (total - done) + " servers left (" + (total - serverBrowserView.Items.Count) + " failed or filtered)...";
+            taskDescription.Text = (total - done) + " servers left out of " + total + " (" + (total - serverBrowserView.Items.Count) + " failed or filtered)...";
         }
 
 
@@ -302,7 +322,6 @@ namespace aIWServerBrowser
             filterName.Text = name;
             currentFilter = f;
         }
-
 
         delegate void onServerUpdatedCallback(Server server);
         private void onServerUpdated(Server server)
@@ -333,7 +352,7 @@ namespace aIWServerBrowser
                 return;
             }
             else if (server.queryStatus == Server.ServerQueryStatus.Successful &&
-                !currentFilter.serverMatchesFilter(server, favMngr))
+                !currentFilter.serverMatchesFilter(server, favMngr, friendMngr))
             {
                 serverBrowserView.Items.Remove(server.rowItem);
             }
@@ -344,41 +363,44 @@ namespace aIWServerBrowser
                 {
                     server.rowItem.SubItems.Clear();
                     server.rowItem.SubItems.Add(HelperFunctions.removeColourCodes(server.serverName));
-                    server.rowItem.SubItems.Add(favMngr.isFavourite(server) ? "⃝" : "-");
+                    server.rowItem.SubItems.Add(favMngr.isFavourite(server) ? "X" : "-");
                     server.rowItem.SubItems.Add(string.Format("{0} ({1})", server.serverPing.ToString(), server.serverDvars["sv_maxPing"]));
                     server.rowItem.SubItems.Add(string.Format("{0} / {1}", server.serverNPlayers, server.serverMaxPlayers));
                     server.rowItem.SubItems.Add(HelperFunctions.gameTypeToFullname(server.serverGametype));
                     server.rowItem.SubItems.Add(HelperFunctions.mapToFullname(server.serverMap));
                     server.rowItem.SubItems.Add(server.serverMod);
-                    server.rowItem.SubItems.Add(server.serverDvars["g_hardcore"].Equals("1") ? "⃝" : "-");
+                    server.rowItem.SubItems.Add(server.serverDvars["g_hardcore"].Equals("1") ? "X" : "-");
                 }
                 else
                 {
                     server.rowItem.SubItems[1].Text = HelperFunctions.removeColourCodes(server.serverName);
-                    server.rowItem.SubItems[2].Text = favMngr.isFavourite(server) ? "⃝" : "-";
+                    server.rowItem.SubItems[2].Text = favMngr.isFavourite(server) ? "X" : "-";
                     server.rowItem.SubItems[3].Text = string.Format("{0} ({1})", server.serverPing.ToString(), server.serverDvars["sv_maxPing"]);
                     server.rowItem.SubItems[4].Text = string.Format("{0} / {1}", server.serverNPlayers, server.serverMaxPlayers);
                     server.rowItem.SubItems[5].Text = HelperFunctions.gameTypeToFullname(server.serverGametype);
                     server.rowItem.SubItems[6].Text = HelperFunctions.mapToFullname(server.serverMap);
                     server.rowItem.SubItems[7].Text = server.serverMod;
                     if (server.serverDvars.ContainsKey("g_hardcore"))
-                        server.rowItem.SubItems[8].Text = (server.serverDvars["g_hardcore"].Equals("1") ? "⃝" : "-");
+                        server.rowItem.SubItems[8].Text = (server.serverDvars["g_hardcore"].Equals("1") ? "X" : "-");
                     else
                         server.rowItem.SubItems[8].Text = "";
                 }
             }
             if (infoDlg.currentServer == server)
                 infoDlg.updateDlg(server); // if the info dlg exists, update it with the correct info
+
+            serverBrowserView.Sort();
         }
 
 
         #endregion
 
         #region UI - Events
-
+        
         private void serverFinishedLaunch()
         {
             joinGameButton.Enabled = true;
+            onJoiningGame(false);
         }
 
 
@@ -389,22 +411,17 @@ namespace aIWServerBrowser
 
         private void serverBrowserForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Properties.Settings.Default.LastBSz = this.Size;
-            //Properties.Settings.Default.Save();
         }
 
         private void serverBrowserForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
-
-            // YOU HAD YOUR CHANCE, DIEEEE
             Environment.Exit(0);
         }
 
         private void serverBrowserView_ColumnClick(object sender,
                            System.Windows.Forms.ColumnClickEventArgs e)
         {
-            if (taskInProgress || serverBrowserView.Items.Count == 0)
+            if (/*taskInProgress || */serverBrowserView.Items.Count == 0)
                 return;
 
             // Determine whether the column is the same as the last column clicked.
@@ -435,13 +452,12 @@ namespace aIWServerBrowser
         
         private void joinGameButton_Click(object sender, EventArgs e)
         {
+            if (connectingToServer)
+                return;
             List<Server> serversSelected = getSelectedServers();
             if (serversSelected.Count > 0)
             {
-                joinGameButton.Enabled = false;
-                if (infoDlg != null)
-                    infoDlg.Hide();
-                this.WindowState = FormWindowState.Minimized;
+                onJoiningGame(true);
                 launchGameOnAddress(serversSelected[0]);
             }
         }
@@ -450,7 +466,7 @@ namespace aIWServerBrowser
         private void serverInfoButton_Click(object sender, EventArgs e)
         {
             if (infoDlg == null)
-                infoDlg = new InfoDlg(new doUpdateServer(refreshSingleServer));
+                infoDlg = new InfoDlg(new doUpdateServer(refreshSingleServer), new JoiningCallback(onJoiningGame));
             infoDlg.Show();
         }
 
@@ -476,6 +492,18 @@ namespace aIWServerBrowser
 
             if (currentFilter.Favourites != Filter.YNA.Yes)
             {
+                if (currentFilter.Friends == Filter.YNA.Yes)
+                {
+                    taskDescription.Text = "Querying friends' servers...";
+                    foreach (IPEndPoint ep in friendMngr.getFriendServers())
+                        addToServerList(new Server(ep));
+                    if (serverList.Count == 0)
+                        taskDescription.Text = "No friends, or none online.";
+                    else
+                        doNewQuery(serverList);
+                    return;
+                }
+
                 taskDescription.Text = "Getting Master list...";
                 doNewMasterQuery();
             }
@@ -486,7 +514,7 @@ namespace aIWServerBrowser
                 foreach (Server serv in favMngr.getFavourites())
                     addToServerList(serv);
                 if (serverList.Count == 0)
-                    taskDescription.Text = "No favourites...";
+                    taskDescription.Text = "No favourites found.";
                 else
                     doNewQuery(serverList);
             }
@@ -542,24 +570,29 @@ namespace aIWServerBrowser
             else
                 sl.Add(serversSelected[0]);
             favMngr.saveFavourites(sl);
-            serversSelected[0].rowItem.SubItems[2].Text = (favMngr.isFavourite(serversSelected[0]) ? "⃝" : "-");
+            serversSelected[0].rowItem.SubItems[2].Text = (favMngr.isFavourite(serversSelected[0]) ? "X" : "-");
         }
 
         private void serverBrowserForm_Load(object sender, EventArgs e)
         {
             if (!Directory.Exists("filters/"))
                 Directory.CreateDirectory("filters");
+            
 
             Version ver = new Version(Application.ProductVersion);
-            authorLabel.Text = "aIW Server Browser v" + ver.ToString() + " \nby KeyboardCat";
-
-            Thread updateThread = new Thread(new ThreadStart(checkForUpdate));
-            updateThread.IsBackground = true;
-            updateThread.Start();
-
-            this.Size = Properties.Settings.Default.LastBSz;
+            authorLabel.Text = "aIW Server Browser v" + ver.ToString() + " by KeyboardCat";
         }
 
         #endregion
+
+        private void mngFriendsBtn_Click(object sender, EventArgs e)
+        {
+            new FriendsList().ShowDialog();
+        }
+
+        private void updateLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://alteriw.net/viewtopic.php?f=35&t=64408");
+        }
     }
 }

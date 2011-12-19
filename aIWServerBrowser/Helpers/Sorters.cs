@@ -24,6 +24,7 @@ using System.Collections;
 
 namespace aIWServerBrowser
 {
+    // Lulzy name.
     public class firstWordIntItemComparer : IComparer
     {
         private int col;
@@ -86,8 +87,12 @@ namespace aIWServerBrowser
         public int Compare(object x, object y)
         {
             int returnVal = -1;
-            returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text.ToLower(),
-                                ((ListViewItem)y).SubItems[col].Text.ToLower());
+            try
+            {
+                returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text.ToLower(),
+                                    ((ListViewItem)y).SubItems[col].Text.ToLower());
+            }
+            catch { }
             if (order == SortOrder.Descending)
                 // Invert the value returned by String.Compare.
                 returnVal *= -1;

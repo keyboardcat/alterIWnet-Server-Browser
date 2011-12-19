@@ -11,7 +11,8 @@
     <RootNamespace>aIWServerBrowser</RootNamespace>
     <AssemblyName>aIWServerBrowser</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>c:\derp\</PublishUrl>
@@ -40,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -49,6 +51,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>45F27FCA26F691B77AECC6E0FFB1F16556DC0A65</ManifestCertificateThumbprint>
@@ -61,6 +64,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -78,8 +84,24 @@
     <Compile Include="Backend\ServerQuery.cs" />
     <Compile Include="Helpers\Filter.cs" />
     <Compile Include="Helpers\Sorters.cs" />
+    <Compile Include="Helpers\Stats.cs" />
     <Compile Include="UI\AddServerUI.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FriendEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FriendsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FriendsList.Designer.cs">
+      <DependentUpon>FriendsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FriendStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FriendStats.Designer.cs">
+      <DependentUpon>FriendStats.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\GameStarting.cs">
       <SubType>Form</SubType>
@@ -105,6 +127,12 @@
     <Compile Include="Helpers\HelperFunctions.cs" />
     <Compile Include="UI\QueryHandler.cs" />
     <Compile Include="Backend\MasterQuery.cs" />
+    <Compile Include="UI\SearchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SearchDialog.Designer.cs">
+      <DependentUpon>SearchDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\serverBrowserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +143,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\AddServerUI.resx">
       <DependentUpon>AddServerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FriendEdit.resx">
+      <DependentUpon>FriendEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FriendsList.resx">
+      <DependentUpon>FriendsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FriendStats.resx">
+      <DependentUpon>FriendStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\GameStarting.resx">
       <DependentUpon>GameStarting.cs</DependentUpon>
@@ -127,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InfoDlg.resx">
       <DependentUpon>InfoDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchDialog.resx">
+      <DependentUpon>SearchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\serverBrowserForm.resx">
       <DependentUpon>serverBrowserForm.cs</DependentUpon>
@@ -141,7 +181,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="aIWServerBrowser_TemporaryKey.pfx" />
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -174,6 +213,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

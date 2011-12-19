@@ -45,13 +45,18 @@ namespace aIWServerBrowser
             availableFilters.Clear();
             filterList.Items.Clear();
             filterList.Items.Add("All servers");
-            filterList.Items.Add("Favourites only");
+            filterList.Items.Add("Favourites");
+            filterList.Items.Add("Friends");
 
             availableFilters.Add(Filter.getDefaultFilter());
 
             // Favourites filter
             Filter temp = Filter.getDefaultFilter();
             temp.Favourites = Filter.YNA.Yes;
+            availableFilters.Add(temp);
+
+            temp = Filter.getDefaultFilter();
+            temp.Friends = Filter.YNA.Yes;
             availableFilters.Add(temp);
 
             try

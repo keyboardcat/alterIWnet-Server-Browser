@@ -54,50 +54,51 @@ namespace aIWServerBrowser
             // 
             // filterList
             // 
-            this.filterList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filterList.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filterList.FormattingEnabled = true;
             this.filterList.ItemHeight = 19;
             this.filterList.Items.AddRange(new object[] {
             "All servers",
-            "Favourites only"});
-            this.filterList.Location = new System.Drawing.Point(119, 9);
+            "Favourites",
+            "Friends"});
+            this.filterList.Location = new System.Drawing.Point(119, 11);
             this.filterList.Name = "filterList";
-            this.filterList.Size = new System.Drawing.Size(186, 194);
+            this.filterList.Size = new System.Drawing.Size(186, 156);
             this.filterList.TabIndex = 0;
             this.filterList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // newFilter
             // 
-            this.newFilter.Location = new System.Drawing.Point(7, 54);
+            this.newFilter.Location = new System.Drawing.Point(7, 44);
             this.newFilter.Name = "newFilter";
             this.newFilter.Size = new System.Drawing.Size(102, 29);
             this.newFilter.TabIndex = 1;
-            this.newFilter.Text = "New Filter";
+            this.newFilter.Text = "New";
             this.newFilter.UseVisualStyleBackColor = true;
             this.newFilter.Click += new System.EventHandler(this.newFilter_Click);
             // 
             // editFilter
             // 
             this.editFilter.Enabled = false;
-            this.editFilter.Location = new System.Drawing.Point(7, 98);
+            this.editFilter.Location = new System.Drawing.Point(7, 79);
             this.editFilter.Name = "editFilter";
             this.editFilter.Size = new System.Drawing.Size(102, 29);
             this.editFilter.TabIndex = 2;
-            this.editFilter.Text = "Edit Filter";
+            this.editFilter.Text = "Edit";
             this.editFilter.UseVisualStyleBackColor = true;
             this.editFilter.Click += new System.EventHandler(this.editFilter_Click);
             // 
             // delFilter
             // 
             this.delFilter.Enabled = false;
-            this.delFilter.Location = new System.Drawing.Point(7, 142);
+            this.delFilter.Location = new System.Drawing.Point(7, 114);
             this.delFilter.Name = "delFilter";
             this.delFilter.Size = new System.Drawing.Size(102, 29);
             this.delFilter.TabIndex = 3;
-            this.delFilter.Text = "Delete Filter";
+            this.delFilter.Text = "Delete";
             this.delFilter.UseVisualStyleBackColor = true;
             this.delFilter.Click += new System.EventHandler(this.delFilter_Click);
             // 
@@ -108,15 +109,16 @@ namespace aIWServerBrowser
             this.useFilter.Name = "useFilter";
             this.useFilter.Size = new System.Drawing.Size(102, 29);
             this.useFilter.TabIndex = 4;
-            this.useFilter.Text = "Use Filter";
+            this.useFilter.Text = "Select";
             this.useFilter.UseVisualStyleBackColor = true;
             this.useFilter.Click += new System.EventHandler(this.useFilter_Click);
             // 
             // FiltersDlg
             // 
+            this.AcceptButton = this.useFilter;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 215);
+            this.ClientSize = new System.Drawing.Size(313, 189);
             this.Controls.Add(this.useFilter);
             this.Controls.Add(this.delFilter);
             this.Controls.Add(this.editFilter);

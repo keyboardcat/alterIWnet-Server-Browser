@@ -19,3 +19,7 @@ C:\Users\Ryunosuke\documents\visual studio 2010\Projects\aIWServerBrowser\aIWSer
 C:\Users\Ryunosuke\documents\visual studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\aIWServerBrowser.application
 C:\Users\Ryunosuke\documents\visual studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\ResGen.read.1.tlog
 C:\Users\Ryunosuke\documents\visual studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\ResGen.write.1.tlog
+C:\Users\Ryunosuke\Documents\Visual Studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\aIWServerBrowser.FriendEdit.resources
+C:\Users\Ryunosuke\Documents\Visual Studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\aIWServerBrowser.FriendsList.resources
+C:\Users\Ryunosuke\Documents\Visual Studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\aIWServerBrowser.SearchDialog.resources
+C:\Users\Ryunosuke\Documents\Visual Studio 2010\Projects\aIWServerBrowser\aIWServerBrowser\obj\x86\Release\aIWServerBrowser.FriendStats.resources

@@ -110,7 +110,7 @@ namespace aIWServerBrowser
     {
         protected Thread _thread;
         private List<Server> serversToQuery; 
-        private BlankCallback _finishCallback;
+        private Action _finishCallback;
         private QueryProgress _progressCallback;
         public ManualResetEvent _doneEvent = new ManualResetEvent(false);
 
@@ -128,7 +128,7 @@ namespace aIWServerBrowser
         public ServerQueryHandler(
             List<Server> servers,
             QueryProgress progressCallback,
-            BlankCallback finishCallback)
+            Action finishCallback)
         {
             serversToQuery = servers;
             _finishCallback = finishCallback;

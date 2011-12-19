@@ -61,6 +61,7 @@ namespace aIWServerBrowser
         private YNA pingLowerThanMax;
         private YNA favourites;
         private YNA mods;
+        private YNA friends;
 
         public string map;
         public string gametype;
@@ -81,6 +82,7 @@ namespace aIWServerBrowser
             pingLowerThanMax = (YNA)info.GetValue("pingLowerThanMax", typeof(YNA));
             favourites = (YNA)info.GetValue("favourites", typeof(YNA));
             mods = (YNA)info.GetValue("mods", typeof(YNA));
+            friends = (YNA)info.GetValue("friends", typeof(YNA));
 
             map = info.GetString("map");
             gametype = info.GetString("gametype");
@@ -100,6 +102,7 @@ namespace aIWServerBrowser
             info.AddValue("pingLowerThanMax", pingLowerThanMax);
             info.AddValue("favourites", favourites);
             info.AddValue("mods", mods);
+            info.AddValue("friends", friends);
             info.AddValue("map", map);
             info.AddValue("gametype", gametype);
             info.AddValue("mod", mod);
@@ -117,6 +120,7 @@ namespace aIWServerBrowser
             f.Favourites = YNA.All;
             f.Hardcore = YNA.All;
             f.Mods = YNA.All;
+            f.Friends = YNA.All;
 
             f.map = "";
             f.gametype = "";
@@ -127,8 +131,14 @@ namespace aIWServerBrowser
             return f;
         }
 
-        public bool serverMatchesFilter(Server s, FavouritesMngr favMngr)
+        public bool serverMatchesFilter(Server s, FavouritesMngr favMngr, FriendsMngr frndMngr)
         {
+            bool b = frndMngr.friendInServer(s.ServerAddress);
+            if (!(friends == YNA.All || // let it through if the filter == All
+                (b && friends == YNA.Yes) || // let it through if the server contains a friend and set to Yes 
+                (!b && friends == YNA.No))) // let it through if the server contains a friend and set to No
+                return false;
+
             if (!(full == YNA.All || // let it through if the filter == All
                 (s.serverNPlayers == s.serverMaxPlayers && full == YNA.Yes) || // let it through if it's full and set to Yes 
                 (s.serverNPlayers != s.serverMaxPlayers && full == YNA.No))) // let it through if it isn't full and set to No
@@ -175,7 +185,8 @@ namespace aIWServerBrowser
             if (!(string.IsNullOrEmpty(gametype) || // let it through if the search == null
                 (s.serverGametype.Contains(gametype) && !string.IsNullOrEmpty(gametype)))) // let it through if it contains a portion of the search and isn't null
                 return false;
-            if (!string.IsNullOrEmpty(buddy)) // let it through if it contains a portion of the search and isn't null
+
+            /*if (!string.IsNullOrEmpty(buddy)) // let it through if it contains a portion of the search and isn't null
             {
                 bool found = false; // we have to do it like this because there is no way to skip the return statement after the loop
                 foreach (Player p in s.serverPlayerList)
@@ -188,7 +199,8 @@ namespace aIWServerBrowser
                 }
                 if (!found)
                     return false;
-            }
+            }*/
+
             if (!(string.IsNullOrEmpty(mod) || // let it through if the search == null
                 (s.serverMod.Contains(mod) && !string.IsNullOrEmpty(mod)))) // let it through if it contains a portion of the search and isn't null
                 return false;
@@ -259,6 +271,18 @@ namespace aIWServerBrowser
             set
             {
                 mods = value;
+            }
+        }
+
+        public YNA Friends
+        {
+            get
+            {
+                return friends;
+            }
+            set
+            {
+                friends = value;
             }
         }
     }

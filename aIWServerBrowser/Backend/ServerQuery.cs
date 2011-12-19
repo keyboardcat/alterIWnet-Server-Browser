@@ -5,6 +5,23 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
+/*
+ * This file is part of aIW Server Browser.
+ *
+ *    aIW Server Browser is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    aIW Server Browser is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with aIW Server Browser.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 namespace aIWServerBrowser
 {
 
@@ -28,8 +45,9 @@ namespace aIWServerBrowser
         public List<Player> serverPlayerList;
         public Dictionary<string, string> serverDvars;
         public ListViewItem rowItem; // the GUI stores the ListViewItem unique to this class. 
-        //Saves having to constantly l0000p through everything to find the correct one...!
-        // event to tell the sender when the server has updated.
+        //Saves having to constantly loop through everything to find the correct one...!
+        
+        // event - when the server has updated.
         public event ServerUpdated ServerUpdated;
 
         private ServerQueryHandler sqh;
@@ -73,24 +91,33 @@ namespace aIWServerBrowser
                 IPEndPoint serverIn = new IPEndPoint(IPAddress.Any, 0);
                 byte[] data = _udp.Receive(ref serverIn);
                 this.serverPing = Environment.TickCount - now; // grab the ping ASAP
+
                 if (threadContext != null)
                 {
-                    if (sqh.QueryCancelled) // derp, stop nao!
+                    if (sqh.QueryCancelled)
                     {
+                        this.queryStatus = ServerQueryStatus.Failed;
                         _udp.Close();
+
+                        ServerUpdated(this);
                         return;
                     }
                 }
-                if (!serverIn.Address.Equals(serverAddr.Address))
+
+                if (queryStatus != ServerQueryStatus.Failed)
                 {
-                    this.queryStatus = ServerQueryStatus.Failed;
-                    throw new Exception("Got data from wrong host " +
-                        serverIn.Address.ToString() + " expected from " +
-                        serverAddr.Address.ToString());
+                    if (!serverIn.Address.Equals(serverAddr.Address))
+                    {
+                        this.queryStatus = ServerQueryStatus.Failed;
+                        throw new Exception("Got data from wrong host " +
+                            serverIn.Address.ToString() + " expected from " +
+                            serverAddr.Address.ToString());
+                    }
+                    
+                    this.parseAndPopulate(data);
+                    this.queryStatus = ServerQueryStatus.Successful;
                 }
                 _udp.Close();
-                this.parseAndPopulate(data);
-                this.queryStatus = ServerQueryStatus.Successful;
             }
             catch (SocketException)
             {
@@ -99,30 +126,16 @@ namespace aIWServerBrowser
             catch (Exception)
             {
                 this.queryStatus = ServerQueryStatus.Failed;
-                throw;
             }
             finally
             {
-                if (threadContext != null)
+                try
                 {
-                    if (!sqh.QueryCancelled) // derp, stop nao!
-                    {
-                        try
-                        {
-                            sqh.queryFinished(); // tell the handler that we've finished our query
-                            ServerUpdated(this);
-                        }
-                        catch { /* o noes! */ }
-                    }
+                    if (threadContext != null)
+                        sqh.queryFinished(); // tell the handler that we've finished our query
+                    ServerUpdated(this);
                 }
-                else
-                {
-                    try
-                    {
-                        ServerUpdated(this);
-                    }
-                    catch { /* o noes! */ }
-                }
+                catch { /* o noes! */ }
             }
         }
 

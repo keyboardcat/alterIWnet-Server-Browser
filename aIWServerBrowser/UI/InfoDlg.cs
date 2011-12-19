@@ -32,9 +32,11 @@ namespace aIWServerBrowser
     public partial class InfoDlg : Form
     {
         private doUpdateServer update;
-        public InfoDlg(doUpdateServer updateFunc)
+        private JoiningCallback joiningServer;
+        public InfoDlg(doUpdateServer updateFunc, JoiningCallback joiningServer)
         {
             update = updateFunc;
+            this.joiningServer = joiningServer;
             InitializeComponent();
         }
 
@@ -122,6 +124,8 @@ namespace aIWServerBrowser
                 singleServerJoinButton.Enabled = false;
             }
             currentServer = server;
+            copyIP.Enabled = true;
+            copyIP.ForeColor = SystemColors.ControlText;
         }
 
         private void InfoDlg_FormClosing(object sender, FormClosingEventArgs e)
@@ -142,14 +146,30 @@ namespace aIWServerBrowser
         private void singleServerJoinButton_Click(object sender, EventArgs e)
         {
             singleServerJoinButton.Enabled = false;
-            this.Hide();
+            
+            joiningServer(true);
 
-            new GameStartingUI(currentServer, new joinServerFinished(joinServerDone)).Show();
+            new GameStartingUI(currentServer, new Action(joinServerDone)).startConnecting();
+
+            this.Hide();
         }
 
         public void joinServerDone()
         {
+            joiningServer(false);
             singleServerJoinButton.Enabled = true;
+        }
+
+        private void copyIP_Click(object sender, EventArgs e)
+        {
+            if (currentServer != null)
+            {
+                if (currentServer.queryStatus == Server.ServerQueryStatus.Successful)
+                {
+                    Clipboard.SetText(currentServer.ServerAddress.ToString());
+                    copyIP.ForeColor = Color.Red;
+                }
+            }
         }
     }
 }

@@ -52,6 +52,7 @@ namespace aIWServerBrowser
             this.playerName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.playerScore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.playerPing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.copyIP = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -71,6 +72,7 @@ namespace aIWServerBrowser
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.copyIP);
             this.splitContainer1.Panel2.Controls.Add(this.singleServerJoinButton);
             this.splitContainer1.Panel2.Controls.Add(this.singleServerRefreshButton);
             this.splitContainer1.Panel2.Controls.Add(this.playerListView);
@@ -98,7 +100,7 @@ namespace aIWServerBrowser
             // 
             this.singleServerJoinButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.singleServerJoinButton.Enabled = false;
-            this.singleServerJoinButton.Location = new System.Drawing.Point(250, 170);
+            this.singleServerJoinButton.Location = new System.Drawing.Point(252, 170);
             this.singleServerJoinButton.Name = "singleServerJoinButton";
             this.singleServerJoinButton.Size = new System.Drawing.Size(101, 28);
             this.singleServerJoinButton.TabIndex = 2;
@@ -110,7 +112,7 @@ namespace aIWServerBrowser
             // 
             this.singleServerRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.singleServerRefreshButton.Enabled = false;
-            this.singleServerRefreshButton.Location = new System.Drawing.Point(143, 170);
+            this.singleServerRefreshButton.Location = new System.Drawing.Point(133, 170);
             this.singleServerRefreshButton.Name = "singleServerRefreshButton";
             this.singleServerRefreshButton.Size = new System.Drawing.Size(101, 28);
             this.singleServerRefreshButton.TabIndex = 1;
@@ -152,6 +154,18 @@ namespace aIWServerBrowser
             this.playerPing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.playerPing.Width = 80;
             // 
+            // copyIP
+            // 
+            this.copyIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.copyIP.Enabled = false;
+            this.copyIP.Location = new System.Drawing.Point(12, 170);
+            this.copyIP.Name = "copyIP";
+            this.copyIP.Size = new System.Drawing.Size(101, 28);
+            this.copyIP.TabIndex = 3;
+            this.copyIP.Text = "Copy IP";
+            this.copyIP.UseVisualStyleBackColor = true;
+            this.copyIP.Click += new System.EventHandler(this.copyIP_Click);
+            // 
             // InfoDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,5 +198,6 @@ namespace aIWServerBrowser
         private System.Windows.Forms.ColumnHeader playerPing;
         private System.Windows.Forms.Button singleServerRefreshButton;
         private System.Windows.Forms.Button singleServerJoinButton;
+        private System.Windows.Forms.Button copyIP;
     }
 }

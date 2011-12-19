@@ -8,6 +8,7 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Forms;
 
 /*
  * This file is part of aIW Server Browser.
@@ -28,9 +29,7 @@ using System.IO;
 
 namespace aIWServerBrowser
 {
-    public delegate void BlankCallback();
-
-    #region Helper Function statics
+    #region Helper Functions
     public static class HelperFunctions
     {
         // *NOT* quick and easy way to retrieve a country for each server.
@@ -366,41 +365,4 @@ namespace aIWServerBrowser
 #endregion
 
     public delegate void gameLaunchError(string message);
-    public class GameLauncher
-    {
-        protected Thread _thread;
-        private string server;
-        private gameLaunchError gle;
-        private string gamepath;
-        public GameLauncher(string server, gameLaunchError gle)
-        {
-            this.server = server;
-            this.gle = gle;
-            this.gamepath = HelperFunctions.getGamePath();
-        }
-
-        public void Launch()
-        {
-            try
-            {
-                Process.Start(this.gamepath);
-            }
-            catch (Exception e)
-            {
-                gle(e.Message);
-            }
-        }
-
-        public void Connect()
-        {
-            try
-            {
-                Process.Start("aiw://connect/" + server);
-            }
-            catch (Exception e)
-            {
-                gle(e.Message);
-            }
-        }
-    }
 }
